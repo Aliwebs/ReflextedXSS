@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Understanding Cross-Site Scripting (XSS)</title>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+          margin: 0;
+          padding: 0;
+          background-color: #f4f4f4;
+          color: #333;
+      }
+      .container {
+          width: 100%;
+          margin: auto;
+          padding: 20px;
+          background: #fff;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1, h2, h3 {
+          color: #333;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          display: block;
+          margin: 20px 0;
+      }
+      .code {
+          background: #f4f4f4;
+          padding: 10px;
+          margin: 10px 0;
+          border-left: 4px solid #3498db;
+          overflow-x: auto;
+      }
+      .note {
+          background: #fffae6;
+          border-left: 4px solid #ffeb3b;
+          padding: 10px;
+          margin: 10px 0;
+      }
+      ul, ol {
+          margin-left: 20px;
+      }
+      a {
+          color: #3498db;
+      }
+      .footer {
+          text-align: center;
+          padding: 20px;
+          background: #333;
+          color: #fff;
+          margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Understanding Cross-Site Scripting (XSS) Vulnerabilities</h1>
+      <div class="separator" style="clear: both;">
+        <a
+          href="https://media.geeksforgeeks.org/wp-content/uploads/20210706191745/tuxpicom1625579254-660x373.jpg"
+          style="display: block; padding: 1em 0; text-align: center; "
+          ><img
+            alt=""
+            border="0"
+            width="320"
+            data-original-height="373"
+            data-original-width="660"
+            src="https://media.geeksforgeeks.org/wp-content/uploads/20210706191745/tuxpicom1625579254-660x373.jpg"
+        /></a>
+      </div>
+
+      <h2>Introduction to Cross-Site Scripting (XSS)</h2>
+      <p>
+        Among the most prevalent and risky flaws in web applications is
+        cross-site scripting (XSS). When an attacker may include dangerous
+        scripts into web pages that other users are viewing, it is known as XSS.
+        Serious repercussions from this vulnerability include website
+        defacement, session hijacking, and data theft.
+      </p>
+
+      <h2>How XSS Works and Its Impact</h2>
+      <p>
+        XSS preys on a user's confidence in a certain website. A compromised
+        website allows the injected script to run with the same rights as the
+        user, which could have disastrous results. XSS can cause minor problems
+        like website defacing to serious security breaches like sensitive data
+        theft.
+      </p>
+      <div class="separator" style="clear: both;">
+        <a
+          href="https://www.extnoc.com/learn/wp-content/uploads/2023/06/types-of-Cross-Site-Scripting-XSS-Attacks.jpg"
+          style="display: block; padding: 1em 0; text-align: center; "
+          ><img
+            alt=""
+            border="0"
+            width="320"
+            data-original-height="448"
+            data-original-width="800"
+            src="https://www.extnoc.com/learn/wp-content/uploads/2023/06/types-of-Cross-Site-Scripting-XSS-Attacks.jpg"
+        /></a>
+      </div>
+
+      <h2>Types of XSS</h2>
+      <ul>
+        <li>
+          <strong>Stored XSS:</strong> The malicious script is kept on the
+          target server for ever, maybe in a database, comment box, or forum
+          post.
+        </li>
+        <li>
+          <strong>Reflected XSS:</strong> The malicious script is reflected off
+          a web server, like in an error message or search result that contains
+          all or part of the input that was submitted to the server.
+        </li>
+        <li>
+          <strong>DOM-based XSS:</strong> Rather of being a server-side
+          vulnerability, it is client-side. The malicious script alters the
+          webpage's Document Object Model (DOM).
+        </li>
+      </ul>
+
+      <h2>Reflected XSS in Detail</h2>
+      <p>
+        When user-supplied data from an HTTP request is instantly incorporated
+        in a web application's answer, it's known as reflected XSS, or
+        non-persistent XSS. Search results, error warnings, and any other
+        feature where user-provided data is mirrored back on the webpage are
+        popular places to find this kind of XSS.
+      </p>
+
+      <h3>How Reflected XSS Works</h3>
+      <p>
+        In a Reflected XSS attack, the attacker sends a malicious link to a
+        victim. When the victim clicks on the link, the injected script is
+        reflected off the web server and executed in the victim's browser. This
+        can lead to the attacker stealing cookies, session tokens, or other
+        sensitive data.
+      </p>
+
+      <h3>Example of Reflected XSS</h3>
+      <p>
+        Consider a web application with a search feature that reflects the
+        search term back to the user:
+      </p>
+      <div class="code">
+        <code
+          >https://vulnerable-website.com/search?query=&lt;script&gt;alert('XSS')&lt;/script&gt;</code
+        >
+      </div>
+      <p>
+        When the victim clicks on the link, the script executes in their
+        browser, displaying an alert with "XSS".
+      </p>
+      <div class="container">
+        <h2>Potential Impact of Reflected XSS</h2>
+        <p>
+          Should a website be open to a mirrored XSS attack, the consequences
+          could be anything from a little formatting disruption to complete
+          identity theft, particularly if the website manages sensitive
+          information. Many documented incidents show that malevolent actors
+          have effectively taken advantage of this kind of attack.
+        </p>
+
+        <p>
+          A well-known instance came in 2016 when a mirrored XSS vulnerability
+          affected the well-known e-commerce website eBay. Redirection of users
+          was the function of a parameter called "url" that was vulnerable.
+          Thank goodness, eBay was informed about this vulnerability by a
+          security researcher. Had someone wicked taken advantage of this
+          weakness, the results might have been substantially worse.
+        </p>
+
+        <p>
+          In 2019 there was another noteworthy case involving Epic Games, the
+          creator of Fortnite. Researchers discovered that reflected XSS attacks
+          might hit a number of ancient sub-domains. They created links using
+          this weakness that may steal Epic Games and maybe Facebook login
+          credentials through the "sign-in with Facebook" feature.
+        </p>
+
+        <p>
+          Such weaknesses can have a hugely negative effect on companies. They
+          might result in losses of money and, more importantly, a steady
+          deterioration of client confidence. People are unwilling to take a
+          chance on a website if they don't believe it can protect their data.
+        </p>
+
+        <h3>References</h3>
+        <ul>
+          <li>
+            <a
+              href="https://www.securityweek.com/ebay-reflected-xss-vulnerability"
+              target="_blank"
+              >Security Vulnerability Discovered on eBay</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.zdnet.com/article/ebay-xss-vulnerability-discovered"
+              target="_blank"
+              >Researcher Finds XSS Flaw on eBay</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.forbes.com/sites/thomasbrewster/2019/01/16/fortnite-vulnerability-exposed-millions-of-epic-games-accounts/?sh=5d5fa31534c0"
+              target="_blank"
+              >Epic Games XSS Vulnerability</a
+            >
+          </li>
+        </ul>
+      </div>
+      <h3>Demonstration</h3>
+      <p>
+        Here, I will demonstrate a Reflected XSS attack on a test application:
+      </p>
+      <!-- Placeholder for the demonstration -->
+      <p><em>[Insert detailed step-by-step demonstration here]</em></p>
+
+      <h2>Potential Causes and Resolution</h2>
+      <p>
+        An important source of XSS vulnerabilities is inadequate user input
+        sanitization. XSS attacks become possible when an application
+        incorporates user input straight into web pages without appropriate
+        validation or encoding.
+      </p>
+
+      <h3>How to Prevent XSS:</h3>
+      <ul>
+        <li>
+          <strong>Input Validation:</strong> Ensure that only valid data is
+          accepted by performing strict input validation.
+        </li>
+        <li>
+          <strong>Output Encoding:</strong> Encode output data to ensure that
+          any potentially malicious characters are rendered harmless.
+        </li>
+        <li>
+          <strong>Use of Security Libraries:</strong> Utilize security libraries
+          that provide built-in functions to prevent XSS.
+        </li>
+        <li>
+          <strong>Content Security Policy (CSP):</strong> Implement CSP to
+          restrict how resources like JavaScript are loaded and executed.
+        </li>
+      </ul>
+
+      <h2>How to Test for XSS</h2>
+      <p>
+        Testing for XSS can be done manually or using automated tools. Here is a
+        demonstration of a manual XSS test using a simple payload:
+      </p>
+      <div class="code">
+        <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code>
+      </div>
+      <ol>
+        <li>Identify input fields or URLs that may be vulnerable.</li>
+        <li>
+          Inject a basic XSS payload such as
+          <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> into the input
+          field or URL.
+        </li>
+        <li>Submit the form or request and observe if the script executes.</li>
+      </ol>
+
+      <h3>Example Scenario:</h3>
+      <ul>
+        <li>Visit a comment section of a web application.</li>
+        <li>
+          Enter <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> as a
+          comment.
+        </li>
+        <li>
+          If the alert box pops up when the comment is viewed, the application
+          is vulnerable to XSS.
+        </li>
+      </ul>
+
+      <p>
+        Automated tools like
+        <a href="https://owasp.org/www-project-zap/">OWASP ZAP</a> or
+        <a href="https://portswigger.net/burp">Burp Suite</a> can also be used
+        to scan web applications for XSS vulnerabilities, providing a
+        comprehensive report of potential issues.
+      </p>
+
+      <h2>Conclusion</h2>
+      <p>
+        If Cross-Site Scripting (XSS) is not correctly addressed, it can have
+        disastrous consequences. Developers may greatly lower the possibility of
+        XSS attacks in their apps by knowing how XSS operates and putting
+        appropriate input validation, output encoding, and security policies in
+        place.
+      </p>
+
+      <p>
+        For more detailed information on preventing XSS and other security
+        vulnerabilities, visit the
+        <a
+          href="https://cheatsheetseries.owasp.org/cheatsheets/XSS_Prevention_Cheat_Sheet.html"
+          >OWASP XSS Prevention Cheat Sheet</a
+        >.
+      </p>
+    </div>
+    <div class="footer">
+      <p>&copy; 2024 Ethical Hacking Blog | All rights reserved</p>
+    </div>
+  </body>
+</html>

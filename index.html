@@ -109,7 +109,7 @@
       <ul>
         <li>
           <strong>Stored XSS:</strong> The malicious script is kept on the
-          target server for ever, maybe in a database, comment box, or forum
+          target server forever, maybe in a database, comment box, or forum
           post.
         </li>
         <li>
@@ -129,7 +129,7 @@
         When user-supplied data from an HTTP request is instantly incorporated
         in a web application's answer, it's known as reflected XSS, or
         non-persistent XSS. Search results, error warnings, and any other
-        feature where user-provided data is mirrored back on the webpage are
+        feature, where user-provided data is mirrored back on the webpage, are
         popular places to find this kind of XSS.
       </p>
 
@@ -160,19 +160,15 @@
         <h2>Potential Impact of Reflected XSS</h2>
         <p>
           Should a website be open to a mirrored XSS attack, the consequences
-          could be anything from a little formatting disruption to complete
+          could be anything from a little formatting disruption to a complete
           identity theft, particularly if the website manages sensitive
           information. Many documented incidents show that malevolent actors
           have effectively taken advantage of this kind of attack.
         </p>
 
         <p>
-          A well-known instance came in 2016 when a mirrored XSS vulnerability
-          affected the well-known e-commerce website eBay. Redirection of users
-          was the function of a parameter called "url" that was vulnerable.
-          Thank goodness, eBay was informed about this vulnerability by a
-          security researcher. Had someone wicked taken advantage of this
-          weakness, the results might have been substantially worse.
+          British Airways: An elite hacking organization known for credit card skimming operations, Magecart, targeted British Airways in 2018. The gang took use of an XSS vulnerability in the British Airways website's JavaScript library, Feedify.   
+          Attackers changed the software to route client information to a malevolent server that had a British Airways-like domain name. With an SSL certificate on the phony server, customers thought they were making a secure purchase. Before the hack was found, they were able to skim credit cards on 380,000 booking transactions. (Moradov)
         </p>
 
         <p>
@@ -180,7 +176,7 @@
           creator of Fortnite. Researchers discovered that reflected XSS attacks
           might hit a number of ancient sub-domains. They created links using
           this weakness that may steal Epic Games and maybe Facebook login
-          credentials through the "sign-in with Facebook" feature.
+          credentials through the "sign-in with Facebook" feature. (Leyden)
         </p>
 
         <p>
@@ -189,31 +185,6 @@
           deterioration of client confidence. People are unwilling to take a
           chance on a website if they don't believe it can protect their data.
         </p>
-
-        <h3>References</h3>
-        <ul>
-          <li>
-            <a
-              href="https://www.securityweek.com/ebay-reflected-xss-vulnerability"
-              target="_blank"
-              >Security Vulnerability Discovered on eBay</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://www.zdnet.com/article/ebay-xss-vulnerability-discovered"
-              target="_blank"
-              >Researcher Finds XSS Flaw on eBay</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://www.forbes.com/sites/thomasbrewster/2019/01/16/fortnite-vulnerability-exposed-millions-of-epic-games-accounts/?sh=5d5fa31534c0"
-              target="_blank"
-              >Epic Games XSS Vulnerability</a
-            >
-          </li>
-        </ul>
       </div>
       <h3>Demonstration</h3>
       <p>
@@ -262,7 +233,7 @@
         <li>Identify input fields or URLs that may be vulnerable.</li>
         <li>
           Inject a basic XSS payload such as
-          <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> into the input
+          <code>&lt;script&gt; alert('XSS')&lt;/script&gt;</code> into the input
           field or URL.
         </li>
         <li>Submit the form or request and observe if the script executes.</li>
@@ -270,7 +241,7 @@
 
       <h3>Example Scenario:</h3>
       <ul>
-        <li>Visit a comment section of a web application.</li>
+        <li>Visit the comment section of a web application.</li>
         <li>
           Enter <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> as a
           comment.
@@ -293,7 +264,7 @@
       <p>
         If Cross-Site Scripting (XSS) is not correctly addressed, it can have
         disastrous consequences. Developers may greatly lower the possibility of
-        XSS attacks in their apps by knowing how XSS operates and putting
+        XSS attacks their apps by knowing how XSS operates and putting
         appropriate input validation, output encoding, and security policies in
         place.
       </p>
